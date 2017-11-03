@@ -1,0 +1,18 @@
+{
+    "respuestas":{
+        "response":{
+            "https://biologie.uni-greifswald.de/fileadmin/uni-greifswald/fakultaet/mnf/biologie/RTG_2010/logo_response_590x221.jpg":"photo"
+        },
+        "balón|balon":{
+            "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg":"photo",
+            "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif":"document"
+        },
+        "polla":{
+            "AgADAQADu6cxG1pd6Ee6dF_p6tb0t4E39y8ABEcXJRzXJ_mY6ZMAAgI":"photo"
+        }
+    },
+    "ingreso":{
+        "ola k ase":"text",
+        "bienvenido":"text"
+    }
+}
