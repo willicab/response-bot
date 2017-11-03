@@ -9,11 +9,12 @@ Bot simple que responde a frases predefinidas
 ## respuestas.json
 El siguente es un ejemplo del json
 
+```javascript
 {
     "respuestas":{
         "Frase":{
             "respuesta":"text",
-            "https://biologie.uni-greifswald.de/fileadmin/uni-greifswald/fakultaet/mnf/biologie/RTG_2010/logo_response_590x221.jpg":"photo",
+            "http://www.e-prophetic.com/wp-content/uploads/2014/01/Response.jpg":"photo",
             "BAADAQADMgADWl3oR4aOugYhuBv0Ag":"video"
         }
     },
@@ -22,6 +23,7 @@ El siguente es un ejemplo del json
         "CgADAQADCgADdHHhR4rw-Rmf0Y2mAg":"document"
     }
 }
+```
 
 * En la sección *"ingreso"* colocaremos las frases que queremos que diga el bot cuando alguien se una al canal.
 * En la sección *"respuestas"* colocaremos las frases y sus respectivas respuestas, como frase también se puede colocar una expresión regular.
