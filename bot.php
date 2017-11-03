@@ -50,8 +50,8 @@ while(1) { # Loop Infinito
                     $key => $response,
                     "reply_to_message_id" => $message_id
                 );
-                $result = send(METHOD[$key], $params);
-                if (DEBUG) print_r(json_decode($result));
+                $receive = send(METHOD[$key], $params);
+                if (DEBUG) print_r(json_decode($receive));
             } else { # Los otros casos
                 $text = isset($result->message->text) ? $result->message->text : "";
                 $str = file_get_contents(JSON);
@@ -67,8 +67,8 @@ while(1) { # Loop Infinito
                             $key => $response,
                             "reply_to_message_id" => $message_id
                         );
-                        $result = send(METHOD[$key], $params);
-                        if (DEBUG) print_r(json_decode($result));
+                        $receive = send(METHOD[$key], $params);
+                        if (DEBUG) print_r(json_decode($receive));
                     }
                 }
             }
@@ -81,8 +81,8 @@ while(1) { # Loop Infinito
                         "text" => '"'.$result->message->sticker->file_id.'":"sticker"',
                         "reply_to_message_id" => $message_id
                     );
-                    $result = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($result));
+                    $receive = send("sendMessage", $params);
+                    if (DEBUG) print_r(json_decode($receive));
                 }
                 if (isset($result->message->document)) {
                     $params = array(
@@ -90,8 +90,8 @@ while(1) { # Loop Infinito
                         "text" => '"'.$result->message->document->file_id.'":"document"',
                         "reply_to_message_id" => $message_id
                     );
-                    $result = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($result));
+                    $receive = send("sendMessage", $params);
+                    if (DEBUG) print_r(json_decode($receive));
                 }
                 if (isset($result->message->audio)) {
                     $params = array(
@@ -99,8 +99,8 @@ while(1) { # Loop Infinito
                         "text" => '"'.$result->message->audio->file_id.'":"audio"',
                         "reply_to_message_id" => $message_id
                     );
-                    $result = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($result));
+                    $receive = send("sendMessage", $params);
+                    if (DEBUG) print_r(json_decode($receive));
                 }
                 if (isset($result->message->video)) {
                     $params = array(
@@ -108,8 +108,8 @@ while(1) { # Loop Infinito
                         "text" => '"'.$result->message->video->file_id.'":"video"',
                         "reply_to_message_id" => $message_id
                     );
-                    $result = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($result));
+                    $receive = send("sendMessage", $params);
+                    if (DEBUG) print_r(json_decode($receive));
                 }
                 if (isset($result->message->photo)) {
                     $key = count($result->message->photo) - 1;
@@ -118,8 +118,8 @@ while(1) { # Loop Infinito
                         "text" => '"'.$result->message->photo[$key]->file_id.'":"photo"',
                         "reply_to_message_id" => $message_id
                     );
-                    $result = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($result));
+                    $receive = send("sendMessage", $params);
+                    if (DEBUG) print_r(json_decode($receive));
                 }
             }
         }
