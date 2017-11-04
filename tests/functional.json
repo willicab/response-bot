@@ -1,79 +1,79 @@
 [
-	[
-		{ "text": "/start balón" },
-		[]
-	],
-	[
-		{ "text": "/link balon" },
-		[ ]
-	],
-	[
-		{ "new_chat_participant": true },
-		[
-			[
-				[ "sendMessage", "text", "ola k ase" ],
-				[ "sendMessage", "text", "bienvenido" ]
-			]
-		]
-	],
-	[
-		{ "text": "balon" },
-		[
-			[
-				[ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
-				[ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
-			]
-		]
-	],
-	[
-		{ "text": "balon" },
-		[
-			[
-				[ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
-				[ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
-			]
-		]
-	],
-	[
-		{ "text": "balon polla" },
-		[
-			[
-				[ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
-				[ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
-			],
-			[
-				[ "sendPhoto", "photo", "AgADAQADu6cxG1pd6Ee6dF_p6tb0t4E39y8ABEcXJRzXJ_mY6ZMAAgI" ]
-			]
-		]
-	],
-	[
-		{ "sticker": { "file_id": 113 } },
-		[ [ [ "sendMessage", "text", "\"113\":\"sticker\"" ] ] ]
-	],
-	[
-		{ "document": { "file_id": 117 } },
-		[ [ [ "sendMessage", "text", "\"117\":\"document\"" ] ] ]
-	],
-	[
-		{ "audio": { "file_id": 131 } },
-		[ [ [ "sendMessage", "text", "\"131\":\"audio\"" ] ] ]
-	],
-	[
-		{ "video": { "file_id": 137 } },
-		[ [ [ "sendMessage", "text", "\"137\":\"video\"" ] ] ]
-	],
-	[
-		{ "photo": [{ "file_id": 141 }] },
-		[ [ [ "sendMessage", "text", "\"141\":\"photo\"" ] ] ]
-	],
-	[
-		{ "text": "balon", "sticker": { "file_id": 113 } },
-		[ 
-			[
-				[ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
-				[ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
-			],
-			[ [ "sendMessage", "text", "\"113\":\"sticker\"" ] ]
-		]
-	]
+    [
+        { "text": "/start balón" },
+        []
+    ],
+    [
+        { "text": "/link balon" },
+        [ ]
+    ],
+    [
+        { "new_chat_participant": true },
+        [
+            [
+                [ "sendMessage", "text", "ola k ase" ],
+                [ "sendMessage", "text", "bienvenido" ]
+            ]
+        ]
+    ],
+    [
+        { "text": "balon" },
+        [
+            [
+                [ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
+                [ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
+            ]
+        ]
+    ],
+    [
+        { "text": "balon" },
+        [
+            [
+                [ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
+                [ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
+            ]
+        ]
+    ],
+    [
+        { "text": "balon polla" },
+        [
+            [
+                [ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
+                [ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
+            ],
+            [
+                [ "sendPhoto", "photo", "AgADAQADu6cxG1pd6Ee6dF_p6tb0t4E39y8ABEcXJRzXJ_mY6ZMAAgI" ]
+            ]
+        ]
+    ],
+    [
+        { "sticker": { "file_id": 113 } },
+        [ [ [ "sendMessage", "text", "\"113\":\"sticker\"" ] ] ]
+    ],
+    [
+        { "document": { "file_id": 117 } },
+        [ [ [ "sendMessage", "text", "\"117\":\"document\"" ] ] ]
+    ],
+    [
+        { "audio": { "file_id": 131 } },
+        [ [ [ "sendMessage", "text", "\"131\":\"audio\"" ] ] ]
+    ],
+    [
+        { "video": { "file_id": 137 } },
+        [ [ [ "sendMessage", "text", "\"137\":\"video\"" ] ] ]
+    ],
+    [
+        { "photo": [{ "file_id": 141 }] },
+        [ [ [ "sendMessage", "text", "\"141\":\"photo\"" ] ] ]
+    ],
+    [
+        { "text": "balon", "sticker": { "file_id": 113 } },
+        [ 
+            [
+                [ "sendPhoto", "photo", "http://www.futbolconbotas.com/images/balon-amarillo-liga-bbva-2012-2013.jpg" ],
+                [ "sendDocument", "document", "http://www.gifmania.com/Gif-Animados-Deportes/Imagenes-Baloncesto/Pelotas-Baloncesto/Pelotas-Baloncesto-Botando-87328.gif" ]
+            ],
+            [ [ "sendMessage", "text", "\"113\":\"sticker\"" ] ]
+        ]
+    ]
 ]
