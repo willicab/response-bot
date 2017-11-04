@@ -38,30 +38,32 @@ if (!function_exists('send')) {
 		$results = get_pending_messages($update_id);
 		foreach ($results as $result) {
 			$update_id = $result->update_id;
-			if(isset($result->message)) {
-				$chat_id = $result->message->chat->id;
-				$message_id = $result->message->message_id;
-				if (isset($result->message->entities)) { # Si se recibe un comando
-					$username = $result->message->from->username;
-					$message = $result->message->text;
-					$length = $result->message->entities[0]->length;
-					$command = substr($message, 0, $length);
-					if ($result->message->entities[0]->type == "bot_command") {
-						switch ($command) {
-							case '/start':
-							case '/help':
-								break;
-							case '/link':
-						}
-					}
-				} elseif (isset($result->message->new_chat_participant)) { # Si entra un nuevo miembro
-					send_new_member_reply($result);
-				} else { # Los otros casos
-					send_respuestas_reply($result);
-				}
-				
-				send_files($result);
+			if(!isset($result->message)) {
+				continue;
 			}
+		
+			$chat_id = $result->message->chat->id;
+			$message_id = $result->message->message_id;
+			if (isset($result->message->entities)) { # Si se recibe un comando
+				$username = $result->message->from->username;
+				$message = $result->message->text;
+				$length = $result->message->entities[0]->length;
+				$command = substr($message, 0, $length);
+				if ($result->message->entities[0]->type == "bot_command") {
+					switch ($command) {
+						case '/start':
+						case '/help':
+							break;
+						case '/link':
+					}
+				}
+			} elseif (isset($result->message->new_chat_participant)) { # Si entra un nuevo miembro
+				send_new_member_reply($result);
+			} else { # Los otros casos
+				send_respuestas_reply($result);
+			}
+			
+			send_files($result);
 		}
 	}
 	
