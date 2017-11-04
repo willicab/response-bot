@@ -31,21 +31,7 @@ class BotEngine
 		$results = $this->get_pending_messages($update_id);
 		foreach ($results as $result) {
 			$update_id = $result->update_id;
-			if(!isset($result->message)) {
-				continue;
-			}
-		
-			$chat_id = $result->message->chat->id;
-			$message_id = $result->message->message_id;
-			if (isset($result->message->entities)) { # Si se recibe un comando
-				$this->process_command($result);
-			} elseif (isset($result->message->new_chat_participant)) { # Si entra un nuevo miembro
-				$this->send_new_member_reply($result);
-			} else { # Los otros casos
-				$this->send_respuestas_reply($result);
-			}
-			
-			$this->send_files($result);
+			$this->process_message($result);
 		}
 		
 		return $update_id;
@@ -63,6 +49,23 @@ class BotEngine
 		if (DEBUG) if (count($json->result) > 0) print_r($json->result);
 		
 		return $json->result;
+	}
+	
+	private function process_message($result) : void
+	{
+		if(!isset($result->message)) {
+			return;
+		}
+	
+		if (isset($result->message->entities)) { # Si se recibe un comando
+			$this->process_command($result);
+		} elseif (isset($result->message->new_chat_participant)) { # Si entra un nuevo miembro
+			$this->send_new_member_reply($result);
+		} else { # Los otros casos
+			$this->send_respuestas_reply($result);
+		}
+		
+		$this->send_files($result);
 	}
 	
 	private function process_command($result) : void
