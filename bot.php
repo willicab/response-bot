@@ -1,13 +1,13 @@
 <?php
 # Token del bot
-define("TOKEN", "000000000000000000000000000000000000000000");
+if (!defined("TOKEN")) define("TOKEN", "000000000000000000000000000000000000000000");
 # Ruta del JSON
-define("JSON", "respuestas.json");
+if (!defined("JSON")) define("JSON", "respuestas.json");
 # Define si se coloca modo debug
-define("DEBUG", true);
+if (!defined("DEBUG")) define("DEBUG", false);
 
 # Definir métodos dependiendo el tipo de mensaje
-define("METHOD", array(
+if (!defined("METHOD")) define("METHOD", array(
     "text" => "sendMessage",
     "photo" => "sendPhoto",
     "sticker" => "sendSticker",
@@ -16,6 +16,25 @@ define("METHOD", array(
     "audio" => "sendAudio",
     "video" => "sendVideo"
 ));
+
+if (!function_exists('send')) {
+	function send($method, $params = array()){
+		global $curl_mock;
+		if(isset($curl_mock)) {
+			return $curl_mock->send($method, $params);
+		}
+		
+		$url   = "https://api.telegram.org/bot".TOKEN."/$method";
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+		return curl_exec($ch);
+	}
+}
+
 $update_id = 0;
 while(1) { # Loop Infinito
     # Obtiene todos los mensajes que se han enviado al bot
@@ -124,16 +143,11 @@ while(1) { # Loop Infinito
             }
         }
     }
+	
+	global $curl_mock;
+	if(isset($curl_mock)) {
+		break;
+	}
+	
     sleep(1);
-}
-
-function send($method, $params = array()){
-    $url   = "https://api.telegram.org/bot".TOKEN."/$method";
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-    return curl_exec($ch);
 }
