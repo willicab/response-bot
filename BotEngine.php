@@ -1,6 +1,6 @@
 <?php
-# Token del bot
-define("TOKEN", "000000000000000000000000000000000000000000");
+require_once "BotEngine.php";
+
 # Ruta del JSON
 define("JSON", "respuestas.json");
 # Define si se coloca modo debug
@@ -19,6 +19,13 @@ define("METHOD", array(
 
 class BotEngine
 {
+	private $httpService;
+	
+	function __construct($httpService)
+	{
+		$this->httpService = $httpService;
+	}
+	
 	public function run(int $update_id) : int
 	{
 		$results = $this->get_pending_messages($update_id);
@@ -57,7 +64,7 @@ class BotEngine
 	
 	private function get_pending_messages(int $update_id) : array
 	{
-		$str = $this->send("getUpdates", array("offset"=>($update_id + 1)));
+		$str = $this->httpService->send("getUpdates", array("offset"=>($update_id + 1)));
 		$json = json_decode($str);
 		if (DEBUG) if (count($json->result) > 0) print_r($json->result);
 		
@@ -125,25 +132,8 @@ class BotEngine
 			$key => $value,
 			"reply_to_message_id" => $result->message->message_id
 		);
-		$response = $this->send(METHOD[$key], $params);
+		$response = $this->httpService->send(METHOD[$key], $params);
 		if (DEBUG) print_r(json_decode($response));
 	}
 	
-	private function send(string $method, array $params = array()) : string
-	{
-		global $curl_mock;
-		if(isset($curl_mock)) {
-			return $curl_mock->send($method, $params);
-		}
-		
-		$url   = "https://api.telegram.org/bot".TOKEN."/$method";
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-		return curl_exec($ch);
-	}
-		
 }
