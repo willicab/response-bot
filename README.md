@@ -36,3 +36,9 @@ El siguente es un ejemplo del json
   * audio
   * video
 * Para los archivos se puede pasar el id del mismo, esta se puede obtener enviandolo como mensaje privado al bot, este responderá con el id y el tipo de respuesta
+
+## Testing
+Para ejecutar los tests funcionales:
+```
+phpunit tests\functional.php
+```
