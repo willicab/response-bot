@@ -66,6 +66,11 @@ class BotEngine
 	{
 		$str = $this->httpService->send("getUpdates", array("offset"=>($update_id + 1)));
 		$json = json_decode($str);
+		$result_prop = "result";
+		if (!isset($json->$result_prop)) {
+			print($str);
+			return [];
+		}
 		if (DEBUG) if (count($json->result) > 0) print_r($json->result);
 		
 		return $json->result;
