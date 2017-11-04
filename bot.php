@@ -34,6 +34,14 @@ if (!function_exists('send')) {
 		return curl_exec($ch);
 	}
 	
+	function get_pending_messages($update_id) {
+		$str = send("getUpdates", array("offset"=>($update_id + 1)));
+		$json = json_decode($str);
+		if (DEBUG) if (count($json->result) > 0) print_r($json->result);
+		
+		return $json->result;
+	}
+	
 	function send_new_member_reply($result) {
 		$str = file_get_contents(JSON);
 		$obj = json_decode($str, true);
@@ -97,11 +105,8 @@ if (!function_exists('send')) {
 
 $update_id = 0;
 while(1) { # Loop Infinito
-    # Obtiene todos los mensajes que se han enviado al bot
-    $str = send("getUpdates", array("offset"=>($update_id + 1)));
-    $json = json_decode($str);
-    if (DEBUG) if (count($json->result) > 0) print_r($json->result);
-    foreach ($json->result as $result) {
+	$results = get_pending_messages($update_id);
+    foreach ($results as $result) {
         $update_id = $result->update_id;
         if(isset($result->message)) {
             $chat_id = $result->message->chat->id;
