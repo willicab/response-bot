@@ -34,6 +34,23 @@ if (!function_exists('send')) {
 		return curl_exec($ch);
 	}
 	
+	function send_respuestas_reply($result) {
+		$text = isset($result->message->text) ? $result->message->text : "";
+		$str = file_get_contents(JSON);
+		$obj = json_decode($str, true);
+		foreach ($obj['respuestas'] as $k => $v) {
+			$re = '/'.$k.'/i';
+			preg_match_all($re, $text, $matches, PREG_SET_ORDER, 0);
+			if (count($matches) == 0) {
+				continue;
+			}
+			
+			$response = array_rand($obj['respuestas'][$k], 1);
+			$key = $obj['respuestas'][$k][$response];
+			send_reply($result, $key, $response);
+		}
+	}
+	
 	function send_files($result) {
 		# Envía archivos al privado para que este develva el file_id que se
 		# puede usar en el json
@@ -106,24 +123,7 @@ while(1) { # Loop Infinito
                 $receive = send(METHOD[$key], $params);
                 if (DEBUG) print_r(json_decode($receive));
             } else { # Los otros casos
-                $text = isset($result->message->text) ? $result->message->text : "";
-                $str = file_get_contents(JSON);
-                $obj = json_decode($str, true);
-                foreach ($obj['respuestas'] as $k => $v) {
-                    $re = '/'.$k.'/i';
-                    preg_match_all($re, $text, $matches, PREG_SET_ORDER, 0);
-                    if (count($matches) > 0) {
-                        $response = array_rand($obj['respuestas'][$k], 1);
-                        $key = $obj['respuestas'][$k][$response];
-                        $params = array(
-                            "chat_id" => $chat_id,
-                            $key => $response,
-                            "reply_to_message_id" => $message_id
-                        );
-                        $receive = send(METHOD[$key], $params);
-                        if (DEBUG) print_r(json_decode($receive));
-                    }
-                }
+				send_respuestas_reply($result);
             }
 			
 			send_files($result);
