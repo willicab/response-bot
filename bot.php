@@ -34,6 +34,15 @@ if (!function_exists('send')) {
 		return curl_exec($ch);
 	}
 	
+	function send_new_member_reply($result) {
+		$str = file_get_contents(JSON);
+		$obj = json_decode($str, true);
+		$response = array_rand($obj['ingreso'], 1);
+		$key = $obj['ingreso'][$response];
+		
+		return send_reply($result, $key, $response);
+	}
+	
 	function send_respuestas_reply($result) {
 		$text = isset($result->message->text) ? $result->message->text : "";
 		$str = file_get_contents(JSON);
@@ -111,17 +120,7 @@ while(1) { # Loop Infinito
                     }
                 }
             } elseif (isset($result->message->new_chat_participant)) { # Si entra un nuevo miembro
-                $str = file_get_contents(JSON);
-                $obj = json_decode($str, true);
-                $response = array_rand($obj['ingreso'], 1);
-                $key = $obj['ingreso'][$response];
-                $params = array(
-                    "chat_id" => $chat_id,
-                    $key => $response,
-                    "reply_to_message_id" => $message_id
-                );
-                $receive = send(METHOD[$key], $params);
-                if (DEBUG) print_r(json_decode($receive));
+				send_new_member_reply($result);
             } else { # Los otros casos
 				send_respuestas_reply($result);
             }
