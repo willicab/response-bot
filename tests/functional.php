@@ -1,19 +1,19 @@
 <?php
 use PHPUnit\Framework\TestCase;
-
-abstract class CurlMock {
-	public abstract function send(string $method, array $params): string;
-}
+require_once "BotEngine.php";
+require_once "HttpService.php";
 
 class FunctionalTestCase extends TestCase 
 {
 	private $chat_id = 7;
 	private $message_id = 13;
-    protected $curl_mock;
+    protected $http_service_mock;
+    protected $bot_engine;
 	
     protected function setUp() : void
     {
-        $this->curl_mock = $this->createMock(CurlMock::class);
+        $this->http_service_mock = $this->createMock(HttpService::class);
+        $this->bot_engine = new BotEngine($this->http_service_mock);
     }
 	
 	public function functionalTestsProvider() : array
@@ -30,18 +30,15 @@ class FunctionalTestCase extends TestCase
      */
     public function testFunctional(stdClass $definition, array $expected_send_calls): void
     {
-		global $curl_mock;
-		$curl_mock = $this->curl_mock;
-		
-		$this->setFakeCurlResponse($definition);
+		$this->setFakeHttpResponse($definition);
 		$this->expectSendCallCount(sizeof($expected_send_calls) + 1);
 		$this->expectGetUpdatesCall();
 		$this->expectSendCalls($expected_send_calls);
 		
-		include "bot.php";
+		$this->bot_engine->run(0);
 	}
 	
-	private function setFakeCurlResponse(stdClass $definition) : void
+	private function setFakeHttpResponse(stdClass $definition) : void
 	{
 		$message = array();
 		$message["message_id"] = $this->message_id;
@@ -78,14 +75,14 @@ class FunctionalTestCase extends TestCase
 		
 		$json = json_encode($response);
 		
-		$this->curl_mock
+		$this->http_service_mock
 			->method("send")
 			->willReturn($json);
 	}
 	
 	private function expectSendCallCount(int $times) : void
 	{
-		$this->curl_mock
+		$this->http_service_mock
 			->expects($this->exactly($times))
 			->method("send");
 	}
@@ -107,7 +104,7 @@ class FunctionalTestCase extends TestCase
 	
 	private function expectSendCall(int $at_index, array $expected_methods, array $expected_params) : void
 	{
-		$this->curl_mock
+		$this->http_service_mock
 			->expects($this->at($at_index))
 			->method("send")
 			->with(
