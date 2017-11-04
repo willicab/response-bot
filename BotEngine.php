@@ -38,18 +38,7 @@ class BotEngine
 			$chat_id = $result->message->chat->id;
 			$message_id = $result->message->message_id;
 			if (isset($result->message->entities)) { # Si se recibe un comando
-				$username = $result->message->from->username;
-				$message = $result->message->text;
-				$length = $result->message->entities[0]->length;
-				$command = substr($message, 0, $length);
-				if ($result->message->entities[0]->type == "bot_command") {
-					switch ($command) {
-						case '/start':
-						case '/help':
-							break;
-						case '/link':
-					}
-				}
+				$this->process_command($result);
 			} elseif (isset($result->message->new_chat_participant)) { # Si entra un nuevo miembro
 				$this->send_new_member_reply($result);
 			} else { # Los otros casos
@@ -74,6 +63,21 @@ class BotEngine
 		if (DEBUG) if (count($json->result) > 0) print_r($json->result);
 		
 		return $json->result;
+	}
+	
+	private function process_command($result) : void
+	{	
+		$message = $result->message;
+		$length = $message->entities[0]->length;
+		$command = substr($message->text, 0, $length);
+		if ($message->entities[0]->type == "bot_command") {
+			switch ($command) {
+				case '/start':
+				case '/help':
+					break;
+				case '/link':
+			}
+		}
 	}
 	
 	private function send_new_member_reply(stdClass $result) : void
