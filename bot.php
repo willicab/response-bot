@@ -33,6 +33,40 @@ if (!function_exists('send')) {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		return curl_exec($ch);
 	}
+	
+	function send_files($result) {
+		# Envía archivos al privado para que este develva el file_id que se
+		# puede usar en el json
+		if ($result->message->chat->type != 'private') {
+			return;
+		}
+		send_file($result, "sticker");
+		send_file($result, "document");
+		send_file($result, "audio");
+		send_file($result, "video");		
+		if (isset($result->message->photo)) {
+			$key = count($result->message->photo) - 1;
+			$text = '"'.$result->message->photo[$key]->file_id.'":"photo"';
+			send_reply($result, "text", $text);
+		}
+	}
+	
+	function send_file($result, $file_type) {
+		if (isset($result->message->$file_type)) {
+			$text = '"'.$result->message->$file_type->file_id.'":"'.$file_type.'"';
+			send_reply($result, "text", $text);
+		}
+	}
+	
+	function send_reply($result, $key, $value) {
+		$params = array(
+			"chat_id" => $result->message->chat->id,
+			$key => $value,
+			"reply_to_message_id" => $result->message->message_id
+		);
+		$response = send(METHOD[$key], $params);
+		if (DEBUG) print_r(json_decode($response));
+	}
 }
 
 $update_id = 0;
@@ -91,56 +125,8 @@ while(1) { # Loop Infinito
                     }
                 }
             }
-            # Envía archivos al privado para que este develva el file_id que se
-            # puede usar en el json
-            if ($result->message->chat->type == 'private') {
-                if (isset($result->message->sticker)) {
-                    $params = array(
-                        "chat_id" => $chat_id,
-                        "text" => '"'.$result->message->sticker->file_id.'":"sticker"',
-                        "reply_to_message_id" => $message_id
-                    );
-                    $receive = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($receive));
-                }
-                if (isset($result->message->document)) {
-                    $params = array(
-                        "chat_id" => $chat_id,
-                        "text" => '"'.$result->message->document->file_id.'":"document"',
-                        "reply_to_message_id" => $message_id
-                    );
-                    $receive = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($receive));
-                }
-                if (isset($result->message->audio)) {
-                    $params = array(
-                        "chat_id" => $chat_id,
-                        "text" => '"'.$result->message->audio->file_id.'":"audio"',
-                        "reply_to_message_id" => $message_id
-                    );
-                    $receive = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($receive));
-                }
-                if (isset($result->message->video)) {
-                    $params = array(
-                        "chat_id" => $chat_id,
-                        "text" => '"'.$result->message->video->file_id.'":"video"',
-                        "reply_to_message_id" => $message_id
-                    );
-                    $receive = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($receive));
-                }
-                if (isset($result->message->photo)) {
-                    $key = count($result->message->photo) - 1;
-                    $params = array(
-                        "chat_id" => $chat_id,
-                        "text" => '"'.$result->message->photo[$key]->file_id.'":"photo"',
-                        "reply_to_message_id" => $message_id
-                    );
-                    $receive = send("sendMessage", $params);
-                    if (DEBUG) print_r(json_decode($receive));
-                }
-            }
+			
+			send_files($result);
         }
     }
 	
