@@ -1,5 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
+require_once "BotEngine.php";
 
 abstract class CurlMock {
 	public abstract function send(string $method, array $params): string;
@@ -10,10 +11,12 @@ class FunctionalTestCase extends TestCase
 	private $chat_id = 7;
 	private $message_id = 13;
     protected $curl_mock;
+    protected $bot_engine;
 	
     protected function setUp() : void
     {
         $this->curl_mock = $this->createMock(CurlMock::class);
+        $this->bot_engine = new BotEngine();
     }
 	
 	public function functionalTestsProvider() : array
@@ -38,7 +41,7 @@ class FunctionalTestCase extends TestCase
 		$this->expectGetUpdatesCall();
 		$this->expectSendCalls($expected_send_calls);
 		
-		include "bot.php";
+		$this->bot_engine->run(0);
 	}
 	
 	private function setFakeCurlResponse(stdClass $definition) : void
