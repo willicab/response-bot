@@ -1,6 +1,4 @@
 <?php
-require_once "BotEngine.php";
-
 # Ruta del JSON
 define("JSON", "respuestas.json");
 # Define si se coloca modo debug
