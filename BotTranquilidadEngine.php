@@ -26,7 +26,7 @@ class BotTranquilidadEngine
     
     private function get_last_message() : array
     {
-        $str = $this->httpService->send("getUpdates", array("offset"=> -1 ));
+        $str = $this->httpService->send("getUpdates", array("offset"=> -1, "limit"=> 1 ));
         $json = json_decode($str);
         $result_prop = "result";
         if (!isset($json->$result_prop)) {
