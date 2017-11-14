@@ -1,7 +1,5 @@
 <?php
-# Token del bot
-define("TOKEN", "000000000000000000000000000000000000000000");
-
+require_once "config.php";
 require_once "BotEngine.php";
 require_once "HttpService.php";
 
