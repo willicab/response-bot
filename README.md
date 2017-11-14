@@ -1,5 +1,6 @@
 # response-bot
 Bot simple que responde a frases predefinidas
+Servicio extra (bot_tranquilidad) para responder a un grupo automáticamente pasado un tiempo
 
 ## Configuración
 1. [Crear un Bot](https://core.telegram.org/bots#3-how-do-i-create-a-bot).
